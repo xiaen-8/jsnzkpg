@@ -1,0 +1,66 @@
+name: Auto Fetch and Test Nodes
+
+on:
+  schedule:
+    - cron: '0 */4 * * *' # 每 4 小时自动执行一次
+  workflow_dispatch: # 支持手动点击运行
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Fetch and Filter Nodes
+      run: |
+        # 创建一个临时的 Python 脚本来抓取和清洗节点
+        cat << 'EOF' > fetch.py
+        import urllib.request
+        import base64
+        import re
+
+        # 全网公开的免费节点源池（这里引入了几个主流的白嫖源）
+        sources = [
+            "https://raw.githubusercontent.com/freefq/free/master/v2",
+            "https://raw.githubusercontent.com/crossutility/Airports/main/v2ray.txt",
+            "https://raw.githubusercontent.com/vless-vmees-vless/vless-vmees-vless.github.io/main/v2ray.txt"
+        ]
+        
+        all_nodes = []
+        for src in sources:
+            try:
+                req = urllib.request.Request(src, headers={'User-Agent': 'Mozilla/5.0'})
+                with urllib.request.urlopen(req, timeout=10) as response:
+                    content = response.read().decode('utf-8', errors='ignore')
+                    # 解密 Base64
+                    decoded = base64.b64decode(content + '=' * (-len(content) % 4)).decode('utf-8', errors='ignore')
+                    all_nodes.extend(decoded.splitlines())
+            except Exception as e:
+                print(f"Skipping source due to error: {e}")
+
+        # 去重并初步清洗
+        unique_nodes = list(set([n.strip() for n in all_nodes if n.startswith(('vmess://', 'vless://', 'ss://', 'trojan://'))]))
+        
+        # 将清洗好的节点重新打包成 Base64 订阅格式
+        output_content = base64.b64encode('\n'.join(unique_nodes).encode('utf-8')).decode('utf-8')
+        
+        # 写入到你的专属节点文件中
+        with open('Jsnzkpg', 'w') as f:
+            f.write(output_content)
+        print(f"Successfully updated {len(unique_nodes)} nodes.")
+        EOF
+        
+        python fetch.py
+
+    - name: Commit and Push Changes
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git add Jsnzkpg
+        git diff --quiet && git diff --staged --quiet || (git commit -m "自动更新节点 [$(date)]" && git push)
