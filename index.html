@@ -22,10 +22,11 @@
             justify-content: center;
             align-items: flex-start;
             color: var(--text-primary);
-            overflow: hidden;
+            overflow-x: hidden;
             position: relative;
             padding: 15px;
             padding-top: 8vh;
+            background: #f0f2f5;
         }
 
         .background-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; }
@@ -65,33 +66,18 @@
             100% { transform: translateX(-100%); }
         }
 
-        .avatar-container {
-            text-align: center;
-            margin-bottom: 0;
-            line-height: 0;
-        }
+        .main-layer { width: 100%; max-width: 480px; margin-top: 20px; }
+
+        .avatar-container { text-align: center; margin-bottom: 0; line-height: 0; }
         .avatar-img {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: none;
-            background: transparent;
-            transition: transform 0.3s ease;
-            display: block;
-            margin: 0 auto;
+            width: 90px; height: 90px; border-radius: 50%;
+            object-fit: cover; display: block; margin: 0 auto;
         }
-        .avatar-img:hover { transform: scale(1.05); }
 
         .page-title {
-            text-align: center;
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 15px;
+            text-align: center; font-size: 32px; font-weight: 700; margin-bottom: 15px;
             background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff);
-            background-size: 400% 400%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background-size: 400% 400%; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             animation: gradient 8s ease infinite;
         }
         @keyframes gradient {
@@ -100,94 +86,42 @@
             100% { background-position: 0% 50%; }
         }
 
-        .main-layer { width: 100%; max-width: 450px; margin-top: 0; }
-        
         .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            border-radius: 12px;
-            border: 1px solid var(--glass-border);
-            padding: 25px;
-            box-shadow: var(--glass-shadow);
-            text-align: center;
-            margin-top: 30px;
+            background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-radius: 12px; border: 1px solid var(--glass-border); padding: 20px;
+            box-shadow: var(--glass-shadow); margin-top: 20px;
         }
 
-        .upload-zone {
-            border-radius: 12px;
-            padding: 30px 20px 25px;  /* 增加底部内边距给提示语留空间 */
-            cursor: pointer;
-            background: rgba(255, 255, 255, 0.2);
-            margin-bottom: 15px;
-            transition: 0.3s;
-            position: relative;
-        }
-        .upload-zone:hover { background: rgba(255, 255, 255, 0.3); transform: scale(1.02); }
+        .section-title { font-size: 16px; font-weight: bold; margin: 15px 0 10px; text-align: left; color: #111; padding-left: 5px; border-left: 4px solid var(--accent-color); }
 
-        /* 上传框内的提示语样式 */
-        .upload-hint {
-            margin-top: 15px;
-            font-size: 12px;
-            color: #d14545;           /* 深红色提升可读性 */
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(2px);
-            padding: 8px 10px;
-            border-radius: 20px;
-            display: inline-block;
-            border: 1px dashed #d14545;
-            line-height: 1.5;
-            font-weight: 500;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        .list-container { display: flex; flex-direction: column; gap: 8px; }
+        .item-card {
+            background: rgba(255, 255, 255, 0.4); border: 1px solid var(--glass-border);
+            padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; border-radius: 8px;
         }
-        .upload-hint span {
-            font-weight: 600;
-            background: #d14545;
-            color: white;
-            border-radius: 16px;
-            padding: 2px 8px;
-            margin: 0 2px;
-            font-size: 11px;
-        }
+        .item-left { display: flex; align-items: center; gap: 10px; }
+        .item-icon { font-size: 16px; width: 20px; text-align: center; }
+        .item-name { font-size: 14px; font-weight: 600; color: #222; }
 
+        .action-btns { display: flex; gap: 6px; }
         .btn {
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            width: 100%;
-            transition: 0.3s;
+            background: var(--accent-color); color: white; border: none; padding: 6px 14px;
+            border-radius: 4px; font-size: 12px; cursor: pointer; font-weight: 600; text-decoration: none;
         }
-
-        #progressSection, #resultSection { display: none; margin-top: 20px; }
-        .progress-bar { background: rgba(0,0,0,0.1); height: 8px; border-radius: 4px; overflow: hidden; margin: 10px 0; }
-        .progress-fill { width: 0%; height: 100%; background: var(--accent-color); transition: 0.3s; }
-
-        .result-item { text-align: left; margin-bottom: 15px; }
-        .label { font-size: 11px; color: #666; font-weight: bold; margin-bottom: 4px; display: block; }
-        .input-group {
-            display: flex; background: rgba(255,255,255,0.4); border: 1px solid var(--glass-border); border-radius: 6px; padding: 4px;
-        }
-        .input-group input { flex: 1; background: transparent; border: none; padding: 6px; font-size: 12px; outline: none; }
-        .btn-copy { background: var(--accent-color); color: white; border: none; padding: 0 12px; border-radius: 4px; font-size: 11px; cursor: pointer; }
+        .btn:hover { background: var(--accent-hover); }
+        .btn.mirror { background: #6c757d; }
+        .btn.mirror:hover { background: #5a6268; }
 
         .music-player { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
         .music-toggle {
             width: 50px; height: 50px; border-radius: 50%; background: var(--glass-bg);
-            backdrop-filter: blur(12px); border: 1px solid var(--glass-border);
-            display: flex; align-items: center; justify-content: center; cursor: pointer;
-            box-shadow: var(--glass-shadow);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--glass-border);
+            display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: var(--glass-shadow);
         }
         .music-toggle.playing { animation: rotate 3s linear infinite; }
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .music-toggle::after { content: "♫"; font-size: 24px; color: var(--accent-color); }
-        
-        /* 隐藏不再使用的元素 */
-        #retryNotice { display: none; } 
     </style>
-    <!-- 百度统计代码 -->
     <script>
         var _hmt = _hmt || [];
         (function() {
@@ -214,43 +148,136 @@
     </div>
 
     <div class="main-layer">
-        <div class="page-title">裤佬永久直链托管</div>
+        <div class="page-title">裤佬永久综合导航</div>
         
         <div class="avatar-container">
-            <img class="avatar-img" src="https://mpimg.cn/view.php/f28da3eac8f392e9fa2ba91723b2bf4c.png" alt="裤佬头像" title="裤佬">
+            <img class="avatar-img" src="https://mpimg.cn/view.php/f28da3eac8f392e9fa2ba91723b2bf4c.png" alt="裤佬头像">
         </div>
 
         <div class="glass-card">
-            <div id="uploadForm">
-                <div class="upload-zone" id="dropZone">
-                    <div style="font-size: 40px;">🔗</div>
-                    <p style="font-size: 14px; color: #555; margin-top: 5px;">点击或将文件拖拽至此处</p>
-                    <!-- 提示语整合在上传框内，完全按照要求：禁止上传apk,html,htm,shtml,shtm · 最大80MB，且无视频审核字样 -->
-                    <div class="upload-hint">
-                        ⚡ 禁止上传 <span>apk</span> <span>html</span> <span>htm</span> <span>shtml</span> <span>shtm</span> · 最大 80MB
-                    </div>
-                    <input type="file" id="fileInput" hidden>
+            <div class="section-title">官方群组</div>
+            <div class="list-container">
+                <div class="item-card">
+                    <div class="item-left"><span class="item-icon">✈️</span><span class="item-name">TG 官方频道</span></div>
+                    <div class="action-btns"><a class="btn" href="https://t.me/stymei" target="_blank">进入</a></div>
                 </div>
-                <button class="btn" onclick="document.getElementById('fileInput').click()">选择文件并上传</button>
+                <div class="item-card">
+                    <div class="item-left"><span class="item-icon">✈️</span><span class="item-name">TG 交流群聊</span></div>
+                    <div class="action-btns"><a class="btn" href="https://t.me/+j664EmVv8m0wZGVk" target="_blank">进入</a></div>
+                </div>
             </div>
 
-            <div id="progressSection">
-                <p style="font-size: 13px;">正在上传到云端永久储存中…</p>
-                <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
-                <p id="percentText" style="font-size: 12px; color: var(--accent-color);">0%</p>
-                <p id="retryNotice" style="display:none;"></p>
+            <div class="section-title">核心推荐</div>
+            <div class="list-container">
+                <div class="item-card">
+                    <div class="item-left"><span class="item-icon">🔥</span><span class="item-name">2元1T机场</span></div>
+                    <div class="action-btns"><a class="btn" href="https://proxy.api.030101.xyz/kelayun.github.io" target="_blank">进入</a></div>
+                </div>
+                <div class="item-card">
+                    <div class="item-left"><span class="item-icon">⚡</span><span class="item-name">镜像仓库</span></div>
+                    <div class="action-btns"><a class="btn" href="https://codeberg.org/Jsnzkpg/Jsnzkpg" target="_blank">进入</a></div>
+                </div>
+                <div class="item-card">
+                    <div class="item-left"><span class="item-icon">✈️</span><span class="item-name">备用频道</span></div>
+                    <div class="action-btns"><a class="btn" href="https://t.me/pyapk" target="_blank">进入</a></div>
+                </div>
             </div>
 
-            <div id="resultSection">
-                <!-- 只保留原始链接 -->
-                <div class="result-item">
-                    <span class="label">🔗 永久直链 (API原生地址)</span>
-                    <div class="input-group">
-                        <input type="text" id="rawLink" readonly>
-                        <button class="btn-copy" onclick="copyValue('rawLink', this)">复制</button>
+            <div class="section-title">实用工具</div>
+            <div class="list-container">
+                <div class="item-card">
+                    <div class="item-left"><span class="item-icon">✈️</span><span class="item-name">TG 代理</span></div>
+                    <div class="action-btns"><a class="btn" href="https://Jsnzkpg.github.io/TelegramProxy" target="_blank">进入</a></div>
+                </div>
+                <div class="item-card">
+                    <div class="item-left"><span class="item-icon">🔖</span><span class="item-name">书签收藏</span></div>
+                    <div class="action-btns"><a class="btn" href="https://Jsnzkpg.github.io" target="_blank">进入</a></div>
+                </div>
+                <div class="item-card">
+                    <div class="item-left"><span class="item-icon">🚀</span><span class="item-name">共享火箭</span></div>
+                    <div class="action-btns"><a class="btn" href="https://stymei.github.io" target="_blank">进入</a></div>
+                </div>
+                <div class="item-card">
+                    <div class="item-left"><span class="item-icon">🐈</span><span class="item-name">Github 加速</span></div>
+                    <div class="action-btns"><a class="btn" href="https://pyapk.github.io" target="_blank">进入</a></div>
+                </div>
+                <div class="item-card">
+                    <div class="item-left"><span class="item-icon">🔄</span><span class="item-name">订阅转换</span></div>
+                    <div class="action-btns"><a class="btn" href="https://stymei.cc.cd" target="_blank">进入</a></div>
+                </div>
+                <div class="item-card">
+                    <div class="item-left"><span class="item-icon">🔗</span><span class="item-name">直链托管</span></div>
+                    <div class="action-btns"><a class="btn" href="https://Jsnzkpg.github.io/Jsnzkpg" target="_blank">进入</a></div>
+                </div>
+                <div class="item-card">
+                    <div class="item-left"><span class="item-icon">🎧</span><span class="item-name">音乐网站</span></div>
+                    <div class="action-btns"><a class="btn" href="https://Jsnzkpg.github.io/music" target="_blank">进入</a></div>
+                </div>
+                <div class="item-card">
+                    <div class="item-left"><span class="item-icon">🔍</span><span class="item-name">网盘搜索</span></div>
+                    <div class="action-btns"><a class="btn" href="https://Jsnzkpg.github.io/pansou" target="_blank">进入</a></div>
+                </div>
+                <div class="item-card">
+                    <div class="item-left"><span class="item-icon">📭</span><span class="item-name">临时邮箱</span></div>
+                    <div class="action-btns"><a class="btn" href="https://Jsnzkpg.github.io/email" target="_blank">进入</a></div>
+                </div>
+                <div class="item-card">
+                    <div class="item-left"><span class="item-icon">🤖</span><span class="item-name">智能 Ai</span></div>
+                    <div class="action-btns"><a class="btn" href="https://Jsnzkpg.github.io/ai" target="_blank">进入</a></div>
+                </div>
+            </div>
+
+            <div class="section-title">专属订阅源 (全自动更新)</div>
+            <div class="list-container">
+                <div class="item-card">
+                    <div class="item-left"><span class="item-icon">🪜</span><span class="item-name">节点订阅</span></div>
+                    <div class="action-btns">
+                        <button class="btn" onclick="copyText('https://raw.githubusercontent.com/xiaen-8/jsnzkpg/Jsnzkpg/Jsnzkpg')">复制</button>
+                        <button class="btn mirror" onclick="copyText('https://codeberg.org/Jsnzkpg/Jsnzkpg/raw/Jsnzkpg/Jsnzkpg')">镜像</button>
                     </div>
                 </div>
-                <button class="btn" style="background:transparent; border:1px solid var(--accent-color); color:var(--accent-color);" onclick="location.reload()">重新上传</button>
+                <div class="item-card">
+                    <div class="item-left"><span class="item-icon">📺</span><span class="item-name">IPTV 直播订阅</span></div>
+                    <div class="action-btns">
+                        <button class="btn" onclick="copyText('https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg1.m3u')">复制</button>
+                        <button class="btn mirror" onclick="copyText('https://codeberg.org/Jsnzkpg/Jsnzkpg/raw/Jsnzkpg/Jsnzkpg1.m3u')">镜像</button>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-left"><span class="item-icon">🎥</span><span class="item-name">TVbox 影视订阅</span></div>
+                    <div class="action-btns">
+                        <button class="btn" onclick="copyText('https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg2')">复制</button>
+                        <button class="btn mirror" onclick="copyText('https://codeberg.org/Jsnzkpg/Jsnzkpg/raw/Jsnzkpg/Jsnzkpg2')">镜像</button>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-left"><span class="item-icon">🎞️</span><span class="item-name">UZ 影视订阅</span></div>
+                    <div class="action-btns">
+                        <button class="btn" onclick="copyText('https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg3')">复制</button>
+                        <button class="btn mirror" onclick="copyText('https://codeberg.org/Jsnzkpg/Jsnzkpg/raw/Jsnzkpg/Jsnzkpg3')">镜像</button>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-left"><span class="item-icon">📽️</span><span class="item-name">Cinetry 订阅</span></div>
+                    <div class="action-btns">
+                        <button class="btn" onclick="copyText('https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg4')">复制</button>
+                        <button class="btn mirror" onclick="copyText('https://codeberg.org/Jsnzkpg/Jsnzkpg/raw/Jsnzkpg/Jsnzkpg4')">镜像</button>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-left"><span class="item-icon">📹</span><span class="item-name">EchoTV 订阅</span></div>
+                    <div class="action-btns">
+                        <button class="btn" onclick="copyText('https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg5')">复制</button>
+                        <button class="btn mirror" onclick="copyText('https://codeberg.org/Jsnzkpg/Jsnzkpg/raw/Jsnzkpg/Jsnzkpg5')">镜像</button>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-left"><span class="item-icon">🐱</span><span class="item-name">猫源订阅</span></div>
+                    <div class="action-btns">
+                        <button class="btn" onclick="copyText('https://raw.githubusercontent.com/Jsnzkpg/stymei/Jsnzkpg/index.js.md5')">复制</button>
+                        <button class="btn mirror" onclick="copyText('https://gh-proxy.org/https://raw.githubusercontent.com/Jsnzkpg/stymei/Jsnzkpg/index.js.md5')">镜像</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -263,10 +290,7 @@
     <script>
         const bgMusic = document.getElementById('bgMusic');
         const musicToggle = document.getElementById('musicToggle');
-        const fileInput = document.getElementById('fileInput');
-        const dropZone = document.getElementById('dropZone');
 
-        // 音乐播放逻辑
         window.addEventListener('load', () => {
             bgMusic.muted = true;
             bgMusic.play().then(() => {
@@ -280,82 +304,12 @@
             else { bgMusic.pause(); musicToggle.classList.remove('playing'); }
         };
 
-        // --- 核心配置 (直接请求API，仅返回原生直链) ---
-        const API = 'https://pan.szfx.top/api.php';  // 唯一API地址
-
-        // 界面事件
-        dropZone.onclick = () => fileInput.click();
-        fileInput.onchange = (e) => { if(e.target.files[0]) handleUpload(e.target.files[0]); };
-        
-        // 上传主逻辑 - 直接请求，仅显示原生链接
-        async function handleUpload(file) {
-            document.getElementById('uploadForm').style.display = 'none';
-            document.getElementById('progressSection').style.display = 'block';
-
-            const fd = new FormData();
-            fd.append('file', file);                // 字段名: file
-            fd.append('format', 'json');             // 强制返回JSON
-
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', API);
-
-            xhr.upload.onprogress = (e) => {
-                if (e.lengthComputable) {
-                    const percent = Math.round((e.loaded / e.total) * 100);
-                    document.getElementById('progressBar').style.width = percent + '%';
-                    document.getElementById('percentText').innerText = percent + '%';
-                }
-            };
-
-            xhr.onload = () => {
-                try {
-                    const responseText = xhr.responseText.trim();
-                    const jsonData = JSON.parse(responseText);
-                    
-                    // 根据szfx API文档: code为0表示成功，downurl为下载地址
-                    if (jsonData.code === 0 && jsonData.downurl) {
-                        const raw = jsonData.downurl;          // 原始下载地址
-                        document.getElementById('rawLink').value = raw;
-                        
-                        document.getElementById('progressSection').style.display = 'none';
-                        document.getElementById('resultSection').style.display = 'block';
-                        return;
-                    } else {
-                        alert('上传失败：' + (jsonData.msg || '未知错误'));
-                        location.reload();
-                    }
-                } catch (e) {
-                    // JSON解析失败，尝试按文本提取链接（兼容后备）
-                    if (xhr.status === 200) {
-                        const urlMatch = responseText.match(/https?:\/\/[^\s"']+/);
-                        if (urlMatch) {
-                            const raw = urlMatch[0];
-                            document.getElementById('rawLink').value = raw;
-                            document.getElementById('progressSection').style.display = 'none';
-                            document.getElementById('resultSection').style.display = 'block';
-                            return;
-                        }
-                    }
-                    alert('上传失败：服务器返回格式异常');
-                    location.reload();
-                }
-            };
-
-            xhr.onerror = () => {
-                alert('网络错误，上传失败。请检查API地址是否可访问，或是否存在跨域限制。');
-                location.reload();
-            };
-
-            xhr.send(fd);
-        }
-
-        function copyValue(id, btn) {
-            const input = document.getElementById(id);
-            input.select();
-            document.execCommand('copy');
-            const originalText = btn.innerText;
-            btn.innerText = '成功';
-            setTimeout(() => btn.innerText = originalText, 2000);
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert('链接成功复制到剪贴板！');
+            }, function() {
+                alert('复制失败，请手动复制：' + text);
+            });
         }
     </script>
 </body>
